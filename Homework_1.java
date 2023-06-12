@@ -20,6 +20,7 @@ public class Homework_1 {
 
         int n = msb(i);
         System.out.println(n);
+        System.out.println(Short.MAX_VALUE);
 
         int[] m1 = array_1(i, n);
         System.out.println(Arrays.toString(m1));
@@ -34,11 +35,11 @@ public class Homework_1 {
     }
 
     public static int[] array_1 (int k, int n) {    // метод по созданию массива, в котором все числа в диапазоне от i до Short.MAX_VALUE (включая i и Short.MAX_VALUE) кратны n
-        int size = (Short.MAX_VALUE - k + n) / n; // находим длину массива
         int a = 0;
         for (int i = k; i < k + n; i++) { // находим в заданном диапазоне первое число, кратное n
             if (i % n == 0) a = i;
         }
+        int size = (Short.MAX_VALUE - a) / n + 1; // находим длину массива
         int[] arr = new int[size]; // создаем массив размером size
         arr[0] = a; // первым элементом будет число а
         for (int i = 1; i < size; i++) { // цикл по заполнению массива числами, кратными n
@@ -48,7 +49,15 @@ public class Homework_1 {
     }
 
     public static int[] array_2 (int k, int n) {    // метод по созданию массива, в котором все числа в диапазоне от Short.MIN_VALUE до i (включая i и Short.MIN_VALUE) некратны n
-        int size = (k - Short.MIN_VALUE + 1) - (k - Short.MIN_VALUE + n) / n; // находим длину массива
+        int a = 0;
+        for (int i = Short.MIN_VALUE; i < Short.MIN_VALUE + n; i++) { // находим в заданном диапазоне первое число, кратное n
+            if (i % n == 0) a = i;
+        }
+        int b = 0;
+        for (int i = k; i > k - n; i--) { // находим в заданном диапазоне последнее число, кратное n
+            if (i % n == 0) b = i;
+        }
+        int size = (k - Short.MIN_VALUE + 1) - ((b - a) / n + 1); // находим длину массива: из количества элементов от Short.MIN_VALUE до k, включая ноль, вычитаем количество элементов, кратных n
         int[] arr = new int[size]; // создаем массив размером size
         for (int i = 0, j = Short.MIN_VALUE; i < size; i++, j++) { // цикл по заполнению массива числами, некратными n
             if (j % n == 0) j++;
