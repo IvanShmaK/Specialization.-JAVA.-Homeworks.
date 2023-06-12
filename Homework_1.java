@@ -51,12 +51,8 @@ public class Homework_1 {
         int size = (k - Short.MIN_VALUE + 1) - (k - Short.MIN_VALUE + n) / n; // находим длину массива
         int[] arr = new int[size]; // создаем массив размером size
         for (int i = 0, j = Short.MIN_VALUE; i < size; i++, j++) { // цикл по заполнению массива числами, некратными n
-            if (j % n != 0) {
-                arr[i] = j;
-            } else {
-                j++;
-                arr[i] = j;
-            }
+            if (j % n == 0) j++;
+            arr[i] = j;
         }
         return arr;
     }
