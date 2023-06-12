@@ -47,7 +47,7 @@ public class Homework_1 {
         return arr;
     }
 
-    public static int[] array_2 (int k, int n) {    // метод по созданию массива, в котором все числа в диапазоне от Short.MIN_VALUE до i (включая i и Short.MIN_VALUE) кратны n
+    public static int[] array_2 (int k, int n) {    // метод по созданию массива, в котором все числа в диапазоне от Short.MIN_VALUE до i (включая i и Short.MIN_VALUE) некратны n
         int size = (k - Short.MIN_VALUE + 1) - (k - Short.MIN_VALUE + n) / n; // находим длину массива
         int[] arr = new int[size]; // создаем массив размером size
         for (int i = 0, j = Short.MIN_VALUE; i < size; i++, j++) { // цикл по заполнению массива числами, некратными n
