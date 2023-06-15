@@ -45,7 +45,7 @@ public class Task2 {
             int size = content.length / 6;
             StringBuilder [] content1 = new StringBuilder[size]; // создаем пустой массив, в который запишем строки нужного нам вида
 
-            for (int i = 0, j = 0; i < content.length; i += 6, j++) { //формируем нужную форму вывода
+            for (int i = 0, j = 0; i < content.length; i += 6, j++) {
                 content1[j] = new StringBuilder(j);
                 content1[j].append("Студент ").append(content[i + 1]).append(" получил ").append(content[i + 3]).append(" по предмету ").append(content[i + 5]);
             }
