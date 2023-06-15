@@ -4,7 +4,7 @@ package org.example.Homework2;
 
 public class Task3 {
     public static void main(String[] args) {
-        String str = "a".repeat(1000000);;
+        String str = "a".repeat(1000000);
         StringBuilder strBuilder = new StringBuilder(str);
 
         long start = System.currentTimeMillis();
