@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class Task2 {
     public static void main(String[] args) {
@@ -41,9 +42,18 @@ public class Task2 {
 
             String[] content = fileContent.split(" ");
 
-            for (int i = 0; i < content.length; i += 6) { //формируем нужную форму вывода
-                System.out.println("Студент " + content[i + 1] + " получил " + content[i + 3] + " по предмету " + content[i + 5]);
+            int size = content.length / 6;
+            StringBuilder [] content1 = new StringBuilder[size]; // создаем пустой массив, в который запишем строки нужного нам вида
+
+            for (int i = 0, j = 0; i < content.length; i += 6, j++) { //формируем нужную форму вывода
+                content1[j] = new StringBuilder(j);
+                content1[j].append("Студент ").append(content[i + 1]).append(" получил ").append(content[i + 3]).append(" по предмету ").append(content[i + 5]);
             }
+
+            for (StringBuilder stringBuilder : content1) {
+                System.out.println(stringBuilder);
+            }
+
         } else System.out.println("В этом файле нет данных!");
     }
 
