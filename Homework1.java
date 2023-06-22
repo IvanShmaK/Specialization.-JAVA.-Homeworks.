@@ -13,14 +13,13 @@ package org.example;
 import java.util.Arrays;
 import java.util.Random;
 
-public class Homework_1 {
+public class Homework1 {
     public static void main(String[] args) {
         int i = new Random().nextInt(2000) + 1;
         System.out.println(i);
 
         int n = msb(i);
         System.out.println(n);
-        System.out.println(Short.MAX_VALUE);
 
         int[] m1 = array_1(i, n);
         System.out.println(Arrays.toString(m1));
