@@ -19,6 +19,7 @@ public class Homework4 {
         String filePath = "C:\\Users\\Иван\\Desktop\\GB учеба\\7. Разработчик — Программист. Специализация\\" +
                 "2. Java знакомство и как пользоваться базовым API\\Homeworks_GB\\src\\main\\java\\org\\example\\" +
                 "Homework4\\userData.txt";
+
         // данные из файла скачиваются сразу при запуске программы, переводятся в список списков строк, который уже в дальнейшей работе и используется
         ArrayList<String> arrayList = null;  // создаем пустой список строк
         try {
@@ -80,7 +81,10 @@ public class Homework4 {
                 ArrayList<String> ages = (ArrayList<String>) sortedUsersFiles.get(1).clone();
                 printArray(arrArrList, indexesOfSortedAges(arrArrList, ages, mapOfIndexes), menu);
                 sc.next();
-            } else System.out.println("Вы ввели неверную цифру! Нужно от 1 до 4!");
+            } else {
+                System.out.println("Вы ввели неверную цифру! Нужно от 1 до 4!");
+                sc.next();
+            }
         }
         sc.close();
 
