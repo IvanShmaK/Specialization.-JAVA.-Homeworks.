@@ -42,9 +42,9 @@ public class Homework4 {
             arrArrList.add(list);
         }
 
-        Map<Integer, Integer> mapOfIndexes = new HashMap<>();   // создаем HashMap-коллекцию, в которой ключами будут индексы в списке возрастов, а значениями - соответствующие им возрасты
-        for (int i = 0; i < arrArrList.get(1).size(); i++) {
-            mapOfIndexes.put(i, Integer.parseInt(arrArrList.get(1).get(i)));
+        List<Integer> listOfIndexesStart = new ArrayList<>();  // создаем список индексов (от 0 до 5)
+        for (int i = 0; i < arrArrList.get(0).size(); i++) {
+            listOfIndexesStart.add(i);
         }
 
         Scanner sc = new Scanner(System.in);
@@ -65,30 +65,23 @@ public class Homework4 {
                 System.out.println("\n" + menu);
                 sc.next();
             } else if (sc.hasNext("2")) {
-                int [] arrayOfIndexStart = new int[arrArrList.get(0).size()];  // создаем массив индексов (от 0 до 5)
-                for (int i = 0; i < arrayOfIndexStart.length; i++) {
-                    arrayOfIndexStart[i] = i;
-                }
-                printArray(arrArrList, arrayOfIndexStart, menu);
+                printArray(arrArrList, listOfIndexesStart, menu);
                 sc.next();
             } else if (sc.hasNext("3")) {
-                ArrayList<String> ages = (ArrayList<String>) arrArrList.get(1).clone();
-                ages.sort(Comparator.naturalOrder());  //для сортировки пришлось делать клон списка с возрастами. Иначе программа отсортированный список возрастов перемешивает
-                printArray(arrArrList, indexesOfSortedAges(arrArrList, ages, mapOfIndexes), menu); // в соответствии с измененным массивом индексов отсортированного списка возрастов
+                List<Integer> listOfIndexesFinish = new ArrayList<>(listOfIndexesStart);
+                listOfIndexesFinish.sort(Comparator.comparingInt(o -> Integer.parseInt(arrArrList.get(1).get(o))));
+                printArray(arrArrList, listOfIndexesFinish, menu);
                 sc.next();
             } else if (sc.hasNext("4")) {
-                ArrayList<ArrayList<String>> sortedUsersFiles = sortForAgeAndSex(arrArrList);
-                ArrayList<String> ages = (ArrayList<String>) sortedUsersFiles.get(1).clone();
-                printArray(arrArrList, indexesOfSortedAges(arrArrList, ages, mapOfIndexes), menu);
+                List<Integer> listOfIndexesFinish = sortForAgeAndSex(arrArrList);
+                printArray(arrArrList, listOfIndexesFinish, menu);
                 sc.next();
             } else {
-                System.out.println("Вы ввели неверную цифру! Нужно от 1 до 4!");
+                System.out.println("Вы ввели неверную цифру! Нужно от 1 до 5!");
                 sc.next();
             }
         }
         sc.close();
-
-
     }
 
     public static void inputAndSaveData(String path) {  // метод, который осуществляет ввод данных и запись их в файл
@@ -122,10 +115,10 @@ public class Homework4 {
         }
     }
 
-    public static void printArray (ArrayList<ArrayList<String>> arrayList, int[] array, String str) {  // метод по выводу данных пользователей в соответствии с полученным массивом индексов
+    public static void printArray(ArrayList<ArrayList<String>> arrayList, List<Integer> list, String str) {  // метод по выводу данных пользователей в соответствии с полученным массивом индексов
         int size = arrayList.size();
         for (int i = 0; i < arrayList.get(0).size(); i++) {
-            int k = array[i];
+            int k = list.get(i);
             StringBuilder sb = new StringBuilder((i + 1) + ". ");
             for (int j = 0; j < size; j++) {
                 sb.append(arrayList.get(j).get(k)).append(", ");
@@ -135,51 +128,19 @@ public class Homework4 {
         System.out.println("\n" + str);
     }
 
-    public static ArrayList<ArrayList<String>> sortForAgeAndSex (ArrayList<ArrayList<String>> arrayList) { // метод, который осуществляет сортировку по полу и возрасту пользователей
-        ArrayList<ArrayList<String>> arList1 = new ArrayList<>(); // создаем два новых пустых списка списков строк (один для мужчин, другой для женщин)
-        for (int i = 0; i < arrayList.size(); i++) {
-            arList1.add(new ArrayList<String>());
-        }
-        ArrayList<ArrayList<String>> arList2 = new ArrayList<>();
-        for (int i = 0; i < arrayList.size(); i++) {
-            arList2.add(new ArrayList<String>());
-        }
+    public static List<Integer> sortForAgeAndSex(ArrayList<ArrayList<String>> arrayList) { // метод, который выдает список индексов отсортированных по полу и возрасту пользователей
+        List<Integer> list1 = new ArrayList<>();  // создаем два новых списка (один для индексов мужчин, другой для индексов женщин)
+        List<Integer> list2 = new ArrayList<>();
 
         for (int i = 0; i < arrayList.get(2).size(); i++) {  // заполняем эти списки по половой принадлежности
-            if (arrayList.get(2).get(i).equals("муж")) {
-                for (int j = 0; j < arrayList.size(); j++) {
-                    arList1.get(j).add(arrayList.get(j).get(i));
-                }
-            } else {
-                for (int j = 0; j < arrayList.size(); j++) {
-                    arList2.get(j).add(arrayList.get(j).get(i));
-                }
-            }
+            if (arrayList.get(2).get(i).equals("муж")) list1.add(i);
+            else list2.add(i);
         }
 
-        arList1.get(1).sort(Comparator.naturalOrder());  // сортируем каждый список по возрасту
-        arList2.get(1).sort(Comparator.naturalOrder());
+        list1.sort(Comparator.comparingInt(o -> Integer.parseInt(arrayList.get(1).get(o))));  // сортируем списки по возрасту
+        list2.sort(Comparator.comparingInt(o -> Integer.parseInt(arrayList.get(1).get(o))));
 
-        for (int i = 0; i < arrayList.size(); i++) {  // добавляем к первому списку соответствующие элементы из второго
-            arList1.get(i).addAll(arList2.get(i));
-        }
-        return arList1;
+        list1.addAll(list2);  // добавляем отсортированный список индексов женщин в такой же список для мужчин
+        return list1;
     }
-
-    public static int[] indexesOfSortedAges (ArrayList<ArrayList<String>> arrayList, ArrayList<String> arStr, Map<Integer,Integer> map) {  // метод, который выдает массив индексов отсортированного списка
-        int[] arrayOfAges = new int[arStr.size()];   // создаем массив отсортированных возрастов
-        for (int i = 0; i < arrayOfAges.length; i++) {
-            arrayOfAges[i] = Integer.parseInt(arStr.get(i));
-        }
-        int [] arrOfIndexFinish = new int[arrayOfAges.length];   // создаем массив индексов отсортированных возрастов
-        for (int i = 0; i < arrayOfAges.length; i++) {
-            for (int j = 0; j < arrayOfAges.length; j++) {
-                if (arrayOfAges[i] == map.get(j)) {
-                    arrOfIndexFinish[i] = j;
-                }
-            }
-        }
-        return arrOfIndexFinish;
-    }
-
 }
