@@ -15,17 +15,17 @@ public class Homework5 {
         Map<String, String> phoneBook = new HashMap<>();
 
         Scanner sc = new Scanner(System.in);
-        String menu = "1. Ввести данные пользователей.\n" +
-                "2. Вывод данных пользователей, отсортированных по убыванию числа телефонов.\n" +
-                "3. Выход.";
+        String menu = """
+                1. Ввести данные пользователей.
+                2. Вывод данных пользователей, отсортированных по убыванию числа телефонов.
+                3. Выход.""";
         System.out.println(menu);
 
         while (!sc.hasNext("3")) {
             if (sc.hasNext("1")) {
                 while (!sc.hasNext("2")) {
-                    //Map<String, String> pb = inputData();  //введенные данные сохраняются в промежуточный HashMap
                     inputData().forEach((key, value) -> phoneBook.merge(key, value, (v1, v2) -> v1.equalsIgnoreCase(v2) ? v1 : v1 + ", " + v2));
-                    // затем финальный HashMap дополняется значениями из промежуточного
+                    // phoneBook дополняется значениями из введенных данных
                     System.out.println("Введите '1' для продолжения ввода данных, либо '2' для выхода");
                     sc.next();
                 }
