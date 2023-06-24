@@ -23,19 +23,25 @@ public class Homework5 {
         while (!sc.hasNext("3")) {
             if (sc.hasNext("1")) {
                 while (!sc.hasNext("2")) {
-                    Map<String, String> pb = inputData();
-                    pb.forEach((key, value) -> phoneBook.merge(key, value, (v1, v2) -> v1.equalsIgnoreCase(v2) ? v1 : v1 + ", " + v2));
+                    //Map<String, String> pb = inputData();  //введенные данные сохраняются в промежуточный HashMap
+                    inputData().forEach((key, value) -> phoneBook.merge(key, value, (v1, v2) -> v1.equalsIgnoreCase(v2) ? v1 : v1 + ", " + v2));
+                    // затем финальный HashMap дополняется значениями из промежуточного
                     System.out.println("Введите '1' для продолжения ввода данных, либо '2' для выхода");
                     sc.next();
                 }
                 System.out.println("\n" + menu);
                 sc.next();
             } else if (sc.hasNext("2")) {
-                ArrayList<String> list1 = new ArrayList<>(phoneBook.keySet());
-                list1.sort(Comparator.comparingInt(o -> phoneBook.get(o).split(", ").length));
-                for (String s: phoneBook.keySet()) {
-                    System.out.println(s + ": " + phoneBook.get(s));
-                }
+                ArrayList<String> list = new ArrayList<>(phoneBook.keySet());
+                list.sort((o1, o2) -> phoneBook.get(o2).split(", ").length - phoneBook.get(o1).split(", ").length); // сортировка по убыванию количества номеров телефонов
+                if (!phoneBook.isEmpty()) {
+                    for (String str: list) {
+                        for (String s : phoneBook.keySet()) {
+                            if (str.equals(s)) System.out.println(s + ": " + phoneBook.get(s));
+                        }
+                    }
+
+                } else System.out.println("Телефонная книга пуста!");
                 System.out.println("\n" + menu);
                 sc.next();
             } else {
